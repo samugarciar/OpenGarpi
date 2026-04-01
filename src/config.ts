@@ -12,6 +12,7 @@ const envSchema = z.object({
   OPENROUTER_MODEL: z.string().default("openrouter/free"),
   DB_PATH: z.string().default("./memory.db"),
   GOOGLE_APPLICATION_CREDENTIALS: z.string().optional(),
+  TAVILY_API_KEY: z.string().optional(),
 });
 
 const parseResult = envSchema.safeParse(process.env);

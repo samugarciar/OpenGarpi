@@ -1,6 +1,8 @@
 import OpenAI from "openai";
 import { config } from "../config.js";
 import type { ChatCompletionMessageParam, ChatCompletionTool } from "openai/resources/index.js";
+import fs from "fs";
+
 
 // Primary: Groq
 const groqClient = new OpenAI({
@@ -50,5 +52,19 @@ export async function generateCompletion(
     } else {
       throw error;
     }
+  }
+}
+
+export async function transcribeAudio(filePath: string): Promise<string> {
+  console.log(`🎙️ Transcribing audio file: ${filePath}`);
+  try {
+    const transcription = await groqClient.audio.transcriptions.create({
+      file: fs.createReadStream(filePath),
+      model: "whisper-large-v3-turbo",
+    });
+    return transcription.text;
+  } catch (error: any) {
+    console.error(`❌ Groq Audio transcription failed: ${error.message}`);
+    throw new Error("No se pudo transcribir el audio.");
   }
 }

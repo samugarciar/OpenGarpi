@@ -25,3 +25,8 @@ coverage/
 # IDEs
 .vscode/
 .idea/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
